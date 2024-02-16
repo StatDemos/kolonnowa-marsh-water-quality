@@ -61,3 +61,48 @@ data.PO4 <- mean_data %>% filter(Parameter == "Av.PO4")
 model.PO4 <- lm(Mean.Value~`Vegetation type`, data = data.PO4)
 summary(model.PO4)
 # p-value: 2.991e-05, significant
+
+# TDS
+data.TDS <- mean_data %>% filter(Parameter == "Av.TDS")
+model.TDS <- lm(Mean.Value~`Vegetation type`, data = data.TDS)
+summary(model.TDS)
+# p-value = 0.1306, Not significant
+
+# TSS
+data.TSS <- mean_data %>% filter(Parameter == "Av.TSS")
+model.TSS <- lm(Mean.Value~`Vegetation type`, data = data.TSS)
+summary(model.TSS)
+# p-value = 0.008069, Not significant
+
+# Temp
+data.Temp <- mean_data %>% filter(Parameter == "Av.Temp")
+model.Temp <- lm(Mean.Value~`Vegetation type`, data = data.Temp)
+summary(model.Temp)
+# p-value = 0.1505, Not significant
+
+# Ph
+data.Ph <- mean_data %>% filter(Parameter == "Av.pH")
+model.Ph <- lm(Mean.Value~`Vegetation type`, data = data.Ph)
+summary(model.Ph)
+# p-value = 7.17e-06, Significant
+
+# Cd
+data.Cd <- mean_data %>% filter(Parameter == "Cd")
+model.Cd <- lm(Mean.Value~`Vegetation type`, data = data.Cd)
+summary(model.Cd)
+# p-value = 1.246e-11, Significant
+
+# Cr
+data.Cr <- mean_data %>% filter(Parameter == "Cr")
+model.Cr <- lm(Mean.Value~`Vegetation type`, data = data.Cr)
+summary(model.Cr)
+# p-value: < 2.2e-16, Significant
+
+# Pb        
+data.Pb <- mean_data %>% filter(Parameter == "Pb")
+model.Pb <- lm(Mean.Value~`Vegetation type`, data = data.Pb)
+summary(model.Pb)
+# p-value = 5.145e-08, Significant
+
+
+
