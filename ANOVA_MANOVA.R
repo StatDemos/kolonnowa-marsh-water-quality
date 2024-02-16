@@ -104,5 +104,65 @@ model.Pb <- lm(Mean.Value~`Vegetation type`, data = data.Pb)
 summary(model.Pb)
 # p-value = 5.145e-08, Significant
 
+################################################################################
+# Nonparametric test - kruskal wallis, non normal error
+
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Alkalin) 
+# p-value = 0.01014, significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.BOD) 
+#p-value = 0.02025, significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.COD)
+# p-value = 0.1424, not significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.DO)
+# p-value = 0.1466, not significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.EC)
+# p-value = 0.7539, not significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.NH4)
+# p-value = 0.02195, significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.NO3)
+# p-value = 0.1925, not significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.PO4)
+# p-value = 0.008197, significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.TDS)
+# p-value = 0.4074, not significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.TSS) 
+# p-value = 0.1677, not significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Temp) 
+# p-value = 0.2341, not significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Ph)
+# p-value = 0.0001961, significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Cd) 
+# p-value = 0.0002007, significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Cr) 
+# p-value = 6.817e-07, significant
+kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Pb) 
+# p-value = 1.762e-05, significant
 
 
+########################################################################
+# MANOVA
+
+manova_data <- mean_data %>% pivot_wider(names_from = Parameter, values_from = Mean.Value)
+
+
+#fit the MANOVA model - parameric
+manova_model_para <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, Av.PO4, 
+                      Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, data = manova_data)
+summary(manova_model_para)
+# Look to see which differ
+summary.aov(manova_model_para)
+
+#fit the MANOVA model - nonparameric
+manova_model_nonpara <- manova(cbind(Av.Alkalin, Av.BOD, Av.NH4, Av.PO4, 
+                                  Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, data = manova_data)
+summary(manova_model_nonpara)
+# Look to see which differ
+summary.aov(manova_model_nonpara)
+
+
+# Considering all variables
+manova_model_all <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, Av.PO4, 
+                                  Av.pH, Cd, Cr, Pb, Av.Temp, Av.TSS, Av.TDS, Av.EC, Av.DO) ~ `Vegetation type`, data = manova_data)
+summary(manova_model_all)
+# Look to see which differ
+summary.aov(manova_model_all)
