@@ -75,7 +75,7 @@ summary(model.TDS)
 data.TSS <- mean_data %>% filter(Parameter == "Av.TSS")
 model.TSS <- lm(Mean.Value~`Vegetation type`, data = data.TSS)
 summary(model.TSS)
-# p-value = 0.008069, Not significant
+# p-value = 0.008069, Significant
 
 # Temp
 data.Temp <- mean_data %>% filter(Parameter == "Av.Temp")
@@ -151,7 +151,7 @@ manova_data <- mean_data %>% pivot_wider(names_from = Parameter,
 
 #fit the MANOVA model - parameric
 manova_model_para <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, 
-                                  Av.PO4, 
+                                  Av.PO4, Av.TSS,
                       Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, 
                       data = manova_data)
 summary(manova_model_para)
