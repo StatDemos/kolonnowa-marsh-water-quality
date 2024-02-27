@@ -6,11 +6,14 @@ library(tidyverse)
 water_quality_data <- read_excel("water quality monthly variation.xlsx")
 
 # Creating new df
-mean_data <- water_quality_data %>% pivot_longer(col = 4:18, names_to = "Parameter", 
+mean_data <- water_quality_data %>% pivot_longer(col = 4:18, 
+                                                 names_to = "Parameter", 
                                           values_to = "Value") %>%
-      group_by(Location, Parameter, `Vegetation type`) %>% summarise(Mean.Value = mean(Value))
+      group_by(Location, Parameter, `Vegetation type`) %>% 
+  summarise(Mean.Value = mean(Value))
 
-mean_data$`Vegetation type` <- relevel(as.factor(mean_data$`Vegetation type`), ref = "WWI")
+mean_data$`Vegetation type` <- relevel(as.factor(mean_data$`Vegetation type`), 
+                                       ref = "WWI")
   
 # ANOVA
 
@@ -142,12 +145,15 @@ kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Pb)
 ########################################################################
 # MANOVA
 
-manova_data <- mean_data %>% pivot_wider(names_from = Parameter, values_from = Mean.Value)
+manova_data <- mean_data %>% pivot_wider(names_from = Parameter, 
+                                         values_from = Mean.Value)
 
 
 #fit the MANOVA model - parameric
-manova_model_para <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, Av.PO4, 
-                      Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, data = manova_data)
+manova_model_para <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, 
+                                  Av.PO4, 
+                      Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, 
+                      data = manova_data)
 summary(manova_model_para)
 # Look to see which differ
 summary.aov(manova_model_para)
@@ -155,15 +161,19 @@ summary.aov(manova_model_para)
 
 #fit the MANOVA model - nonparameric
 manova_model_nonpara <- manova(cbind(Av.Alkalin, Av.BOD, Av.NH4, Av.PO4, 
-                                  Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, data = manova_data)
+                                  Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, 
+                               data = manova_data)
 summary(manova_model_nonpara)
 # Look to see which differ
 summary.aov(manova_model_nonpara)
 
 
 # Considering all variables
-manova_model_all <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, Av.PO4, 
-                                  Av.pH, Cd, Cr, Pb, Av.Temp, Av.TSS, Av.TDS, Av.EC, Av.DO) ~ `Vegetation type`, data = manova_data)
+manova_model_all <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, 
+                                 Av.PO4, 
+                                  Av.pH, Cd, Cr, Pb, Av.Temp, Av.TSS, Av.TDS, 
+                                 Av.EC, Av.DO) ~ `Vegetation type`, 
+                           data = manova_data)
 summary(manova_model_all)
 # Look to see which differ
 summary.aov(manova_model_all)
