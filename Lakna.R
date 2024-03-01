@@ -9,6 +9,11 @@ model.TDS_fitresid <- augment(model.TDS)
 # shapiro wilk
 shapiro.test(model.TDS_fitresid$.std.resid)
 # p-value = 0.2821, Normal.
+# QQ plot  ## OKAY
+ggplot(model.TDS_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 library(car)
 durbinWatsonTest(model.TDS)
@@ -27,6 +32,11 @@ model.TSS_fitresid <- augment(model.TSS)
 # shapiro wilk
 shapiro.test(model.TSS_fitresid$.std.resid)
 # p-value = 2.528e-06, Not Normal.
+# QQ plot  ## OKAY
+ggplot(model.TSS_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 library(car)
 durbinWatsonTest(model.TSS)
@@ -45,6 +55,11 @@ model.Temp_fitresid <- augment(model.Temp)
 # shapiro wilk
 shapiro.test(model.Temp_fitresid$.std.resid)
 # p-value = 0.8538, Normal.
+# QQ plot  ## OKAY
+ggplot(model.Temp_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 library(car)
 durbinWatsonTest(model.Temp)
@@ -63,6 +78,11 @@ model.Ph_fitresid <- augment(model.Ph)
 # shapiro wilk
 shapiro.test(model.Ph_fitresid$.std.resid)
 # p-value = 0.9756, Normal.
+# QQ plot  ## OKAY
+ggplot(model.Ph_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 library(car)
 durbinWatsonTest(model.Ph)
@@ -111,6 +131,11 @@ model.TDS_fitresid <- augment(model.TDS)
 # shapiro wilk
 shapiro.test(model.TDS_fitresid$.std.resid)
 # p-value = 0.4965, Normal.
+# QQ plot  ## OKAY
+ggplot(model.TDS_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 library(car)
 durbinWatsonTest(model.TDS)
@@ -129,6 +154,11 @@ model.TSS_fitresid <- augment(model.TSS)
 # shapiro wilk
 shapiro.test(model.TSS_fitresid$.std.resid)
 # p-value = 0.01468, Not Normal.
+# QQ plot  ## OKAY
+ggplot(model.TSS_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 library(car)
 durbinWatsonTest(model.TSS)
@@ -147,6 +177,11 @@ model.Temp_fitresid <- augment(model.Temp)
 # shapiro wilk
 shapiro.test(model.Temp_fitresid$.std.resid)
 # p-value = 0.8916, Normal.
+# QQ plot  ## OKAY
+ggplot(model.Temp_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 library(car)
 durbinWatsonTest(model.Temp)
@@ -165,6 +200,11 @@ model.Ph_fitresid <- augment(model.Ph)
 # shapiro wilk
 shapiro.test(model.Ph_fitresid$.std.resid)
 # p-value = 0.9641, Normal.
+# QQ plot  ## OKAY
+ggplot(model.Ph_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 library(car)
 durbinWatsonTest(model.Ph)

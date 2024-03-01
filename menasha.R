@@ -7,7 +7,7 @@ library(car)
 
 # Loading Dataset
 water_quality_data <- read_excel("water quality monthly variation.xlsx")
-View(water_quality_data)
+#View(water_quality_data)
 
 # Loading Dataset
 water_quality_data <- read_excel("water quality monthly variation.xlsx")
@@ -49,6 +49,12 @@ model.EC_fitresid <- augment(model.EC)
 # shapiro wilk
 shapiro.test(model.EC_fitresid$.std.resid)
 # p-value = 5.121e-05, reject Ho - not normal
+# QQ plot  ## OKAY
+ggplot(model.EC_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
+
 
 # durbin watson
 durbinWatsonTest(model.EC)
@@ -72,6 +78,12 @@ model.NH4_fitresid <- augment(model.NH4)
 # shapiro wilk
 shapiro.test(model.NH4_fitresid$.std.resid)
 # p-value = 0.00284, reject Ho - not normal
+# QQ plot  ## OKAY
+ggplot(model.NH4_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
+
 
 # durbin watson
 durbinWatsonTest(model.NH4)
@@ -95,6 +107,12 @@ model.NO3_fitresid <- augment(model.NO3)
 # shapiro wilk
 shapiro.test(model.NO3_fitresid$.std.resid)
 # p-value = 7.356e-10, reject Ho - not normal
+# QQ plot  ## OKAY
+ggplot(model.NO3_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
+
 
 # durbin watson
 durbinWatsonTest(model.NO3)
@@ -118,6 +136,12 @@ model.PO4_fitresid <- augment(model.PO4)
 # shapiro wilk
 shapiro.test(model.PO4_fitresid$.std.resid)
 # p-value = 8.293e-06, reject Ho - not normal
+# QQ plot  ## OKAY
+ggplot(model.PO4_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
+
 
 # durbin watson
 durbinWatsonTest(model.PO4)
@@ -146,6 +170,12 @@ model.EC.log_fitresid <- augment(model.EC.log)
 # shapiro wilk
 shapiro.test(model.EC.log_fitresid$.std.resid)
 # p-value = 1.367e-05, reject Ho - not normal
+# QQ plot  ## OKAY
+ggplot(model.EC.log_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
+
 
 # durbin watson
 durbinWatsonTest(model.EC.log)
@@ -169,6 +199,12 @@ model.NH4.log_fitresid <- augment(model.NH4.log)
 # shapiro wilk
 shapiro.test(model.NH4.log_fitresid$.std.resid)
 # p-value = 0.6917, do not reject Ho - normal
+# QQ plot  ## OKAY
+ggplot(model.NH4.log_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
+
 
 # durbin watson
 durbinWatsonTest(model.NH4.log)
@@ -191,6 +227,12 @@ model.NO3.log_fitresid <- augment(model.NO3.log)
 # shapiro wilk
 shapiro.test(model.NO3.log_fitresid$.std.resid)
 # p-value = 0.003487, reject Ho - not normal
+# QQ plot  ## OKAY
+ggplot(model.NO3.log_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
+
 
 # durbin watson
 durbinWatsonTest(model.NO3.log)
@@ -213,6 +255,12 @@ model.PO4.log_fitresid <- augment(model.PO4.log)
 # shapiro wilk
 shapiro.test(model.PO4.log_fitresid$.std.resid)
 # p-value = 0.003083, reject Ho - not normal
+# QQ plot  ## OKAY
+ggplot(model.PO4.log_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
+
 
 # durbin watson
 durbinWatsonTest(model.PO4.log)
