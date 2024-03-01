@@ -33,6 +33,11 @@ model.PO1_fitresid <- augment(model.Alkalin)
 # shapiro wilk
 shapiro.test(model.PO1_fitresid$.std.resid) 
 # normality assumption not rejected
+# QQ plot  ## OKAY
+ggplot(model.PO1_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 
@@ -58,6 +63,11 @@ model.PO2_fitresid <- augment(model.BOD)
 # shapiro wilk
 shapiro.test(model.PO2_fitresid$.std.resid) 
 # normality assumption is rejected
+# QQ plot  ## OKAY
+ggplot(model.PO2_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 
@@ -83,6 +93,11 @@ model.PO3_fitresid <- augment(model.COD)
 # shapiro wilk
 shapiro.test(model.PO3_fitresid$.std.resid) 
 # normality assumption is rejected
+# QQ plot  ## OKAY
+ggplot(model.PO3_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 
@@ -108,6 +123,11 @@ model.PO4_fitresid <- augment(model.DO)
 # shapiro wilk
 shapiro.test(model.PO4_fitresid$.std.resid) 
 # normality assumption is rejected
+# QQ plot  ## OKAY
+ggplot(model.PO4_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 
@@ -133,6 +153,11 @@ model.POl1_fitresid <- augment(model.log.Alkalin)
 # shapiro wilk
 shapiro.test(model.POl1_fitresid$.std.resid) 
 # normality assumption not rejected
+# QQ plot  ## OKAY
+ggplot(model.POl1_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 
@@ -158,6 +183,11 @@ model.POl2_fitresid <- augment(model.log.BOD)
 # shapiro wilk
 shapiro.test(model.POl2_fitresid$.std.resid) 
 # normality assumption is rejected
+# QQ plot  ## OKAY
+ggplot(model.POl2_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 
@@ -183,6 +213,11 @@ model.POl3_fitresid <- augment(model.log.COD)
 # shapiro wilk
 shapiro.test(model.POl3_fitresid$.std.resid) 
 # normality assumption is rejected
+# QQ plot  ## OKAY
+ggplot(model.POl3_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 
@@ -208,6 +243,11 @@ model.POl4_fitresid <- augment(model.log.DO)
 # shapiro wilk
 shapiro.test(model.POl4_fitresid$.std.resid) 
 # normality assumption is rejected
+# QQ plot  ## OKAY
+ggplot(model.POl4_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 
@@ -218,3 +258,4 @@ durbinWatsonTest(model.log.DO)
 res <- bptest(model.log.DO)
 res
 # variance is constant
+

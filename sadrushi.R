@@ -32,6 +32,11 @@ model.Cd_fitresid <- augment(model.Cd)
 
 # shapiro wilk
 shapiro.test(model.Cd_fitresid$.std.resid) # not normal
+# QQ plot
+ggplot(model.Cd_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals - Cd", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 durbinWatsonTest(model.Cd) # okay
@@ -52,6 +57,12 @@ model.Cr_fitresid <- augment(model.Cr)
 
 # shapiro wilk
 shapiro.test(model.Cr_fitresid$.std.resid) # not normal
+# QQ plot  ## OKAY
+ggplot(model.Cr_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals - Cr", x = "Expected", 
+       y = "Residuals")
+
 
 # residual autocorrelation
 durbinWatsonTest(model.Cr) # not independent
@@ -69,15 +80,19 @@ summary(model.Pb)
 # Assumption checking
 model.Pb_fitresid <- augment(model.Pb) 
 
-# shapiro wilk
+# shapiro wilk 
 shapiro.test(model.Pb_fitresid$.std.resid) # not normal
+# QQ plot  ## OKAY
+ggplot(model.Pb_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals - Pb", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 durbinWatsonTest(model.Pb) # okay
 
 # constant variance
 bptest(model.Pb) # okay
-
 
 
 ############## LOG TRANSFORMATION ###############
@@ -93,6 +108,11 @@ model.Cd_fitresid <- augment(model.Cd)
 
 # shapiro wilk
 shapiro.test(model.Cd_fitresid$.std.resid) # not normal
+# QQ plot  ## BETTER THAN FIRST
+ggplot(model.Cd_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 durbinWatsonTest(model.Cd) # not okay
@@ -113,6 +133,11 @@ model.Cr_fitresid <- augment(model.Cr)
 
 # shapiro wilk
 shapiro.test(model.Cr_fitresid$.std.resid) # normal
+# QQ plot  ## OKAY
+ggplot(model.Cr_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 durbinWatsonTest(model.Cr) # not independent
@@ -132,6 +157,11 @@ model.Pb_fitresid <- augment(model.Pb)
 
 # shapiro wilk
 shapiro.test(model.Pb_fitresid$.std.resid) # normal
+# QQ plot  ## OKAY
+ggplot(model.Pb_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals", x = "Expected", 
+       y = "Residuals")
 
 # residual autocorrelation
 durbinWatsonTest(model.Pb) # okay
