@@ -183,3 +183,19 @@ library(mvnormtest)
 manova_data$Av.pH[17] <- mean(manova_data$Av.pH)
 C <- t(manova_data[1:47, 3:17])
 mshapiro.test(C)
+
+##################### correlation among parameters #########################
+
+data <- manova_data %>% select(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, 
+                               Av.PO4, Av.TSS,
+                               Av.pH, Cd, Cr, Pb)
+
+library(Hmisc)
+
+#create matrix of correlation coefficients and p-values
+rcorr(as.matrix(data))
+
+library(corrplot)
+
+#visualize correlation matrix
+corrplot(cor(data))
