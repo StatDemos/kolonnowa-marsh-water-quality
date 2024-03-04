@@ -16,5 +16,5 @@ summary.aov(manova_model)
 
 
 # Multivariate Normality
-C <- t(manova_data[1:47, 3:17])
+C <- t(Soil_data[1:47, 3:6])
 mshapiro.test(C)
