@@ -1,5 +1,6 @@
 library(readxl)
 library(tidyverse)
+library(mvnormtest)
 
 # Data
 Soil_data <- read_excel("soil Analysis summery.xlsx")
@@ -12,3 +13,8 @@ summary(manova_model)
 
 # Look to see which differ
 summary.aov(manova_model)
+
+
+# Multivariate Normality
+C <- t(manova_data[1:47, 3:17])
+mshapiro.test(C)
