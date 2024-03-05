@@ -4,6 +4,7 @@ library(tidyverse)
 library(broom)
 library(car)
 library(lmtest)
+library(MASS)
 
 # Loading Dataset
 water_quality_data <- read_excel("water quality monthly variation.xlsx")
@@ -43,6 +44,26 @@ durbinWatsonTest(model.Cd) # okay
 
 # constant variance
 bptest(model.Cd) # okay
+
+# Box Cox
+bc <- boxcox(Mean.Value~`Vegetation type`, data = data.Cd)
+(lambda <- bc$x[which.max(bc$y)])
+lambda <- -1
+
+#fit new linear regression model using the Box-Cox transformation
+new_model <- lm(((Mean.Value^lambda-1)/lambda) ~ `Vegetation type`, data = data.Cd)
+summary(new_model)
+
+# Assumption checking
+model.Cd_fitresid1 <- augment(new_model)
+
+# shapiro wilk
+shapiro.test(model.Cd_fitresid1$.std.resid) # not normal
+# QQ plot
+ggplot(model.Cd_fitresid1, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals - Cd", x = "Expected", 
+       y = "Residuals")
 
 
 

@@ -18,3 +18,7 @@ summary.aov(manova_model)
 # Multivariate Normality
 C <- t(Soil_data[1:47, 3:6])
 mshapiro.test(C)
+
+
+library(MVN)
+mvn(Soil_data[, 3:6], multivariatePlot = "qq", multivariateOutlierMethod = "quan")

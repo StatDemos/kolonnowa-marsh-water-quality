@@ -184,6 +184,31 @@ manova_data$Av.pH[17] <- mean(manova_data$Av.pH)
 C <- t(manova_data[1:47, 3:17])
 mshapiro.test(C)
 
+#fit the MANOVA model - parameric with normal variables
+manova_model_para <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NO3, 
+                                  Av.pH, Cr, Pb) ~ `Vegetation type`, 
+                            data = manova_data)
+summary(manova_model_para)
+# Look to see which differ
+summary.aov(manova_model_para)
+
+# multivariate normality
+
+normaldata <- c("Av.Alkalin", "Av.BOD", "Av.COD", "Av.NO3", 
+                "Av.pH", "Cr", "Pb")
+
+# method 1
+library(MVN)
+manova_data$Av.pH[17] <- mean(manova_data$Av.pH, na.rm = TRUE)
+mvn(manova_data[, normaldata], multivariatePlot = "qq", multivariateOutlierMethod = "quan")
+
+# method 2
+library(mvnormtest)
+C <- t(manova_data[1:47, normaldata])
+mshapiro.test(C)
+
+
+
 ##################### correlation among parameters #########################
 
 data <- manova_data %>% select(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, 
