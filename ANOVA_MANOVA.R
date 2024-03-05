@@ -1,6 +1,9 @@
 # Loading libraries
 library(readxl)
 library(tidyverse)
+library(MASS)
+library(effectsize)
+
  
 # Loading Dataset
 water_quality_data <- read_excel("water quality monthly variation.xlsx")
@@ -104,65 +107,47 @@ model.Pb <- lm(Mean.Value~`Vegetation type`, data = data.Pb)
 summary(model.Pb)
 # p-value = 5.145e-08, Significant
 
-################################################################################
-# Nonparametric test - kruskal wallis, non normal error
-
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Alkalin) 
-# p-value = 0.01014, significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.BOD) 
-#p-value = 0.02025, significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.COD)
-# p-value = 0.1424, not significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.DO)
-# p-value = 0.1466, not significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.EC)
-# p-value = 0.7539, not significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.NH4)
-# p-value = 0.02195, significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.NO3)
-# p-value = 0.1925, not significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.PO4)
-# p-value = 0.008197, significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.TDS)
-# p-value = 0.4074, not significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.TSS) 
-# p-value = 0.1677, not significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Temp) 
-# p-value = 0.2341, not significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Ph)
-# p-value = 0.0001961, significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Cd) 
-# p-value = 0.0002007, significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Cr) 
-# p-value = 6.817e-07, significant
-kruskal.test(Mean.Value ~ `Vegetation type`, data = data.Pb) 
-# p-value = 1.762e-05, significant
-
-
 ########################################################################
 # MANOVA
 
 manova_data <- mean_data %>% pivot_wider(names_from = Parameter, values_from = Mean.Value)
 
 
-#fit the MANOVA model - parameric
-manova_model_para <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, Av.PO4, 
-                      Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, data = manova_data)
+#fit the MANOVA model - parametric
+manova_model_para <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, 
+                                  (1/Av.PO4), Av.TSS,
+                                  Av.pH, (1/Cd), Cr, Pb) ~ `Vegetation type`, 
+                            data = manova_data)
 summary(manova_model_para)
 # Look to see which differ
 summary.aov(manova_model_para)
 
-#fit the MANOVA model - nonparameric
-manova_model_nonpara <- manova(cbind(Av.Alkalin, Av.BOD, Av.NH4, Av.PO4, 
-                                  Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, data = manova_data)
-summary(manova_model_nonpara)
-# Look to see which differ
-summary.aov(manova_model_nonpara)
+
+# Effect size
+eta_squared(manova_model_para)
 
 
-# Considering all variables
-manova_model_all <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, Av.PO4, 
-                                  Av.pH, Cd, Cr, Pb, Av.Temp, Av.TSS, Av.TDS, Av.EC, Av.DO) ~ `Vegetation type`, data = manova_data)
-summary(manova_model_all)
-# Look to see which differ
-summary.aov(manova_model_all)
+# Post Hoc
+
+manova_data <- manova_data %>% mutate(new.PO4 = 1/Av.PO4, new.Cd = 1/Cd)
+
+
+dependent_vars <- cbind(manova_data$Av.Alkalin,
+                        manova_data$Av.BOD, manova_data$Av.COD, manova_data$Av.NH4,
+                        manova_data$Av.NO3, manova_data$new.PO4, manova_data$Av.TSS,
+                        manova_data$Av.pH, manova_data$new.Cd, manova_data$Cr,
+                        manova_data$Pb)
+independent_var <- manova_data$`Vegetation type`
+
+lda <- lda(independent_var ~ dependent_vars, CV = F)
+lda
+
+vegetation.type = manova_data[, "Vegetation type"]
+lda1 = predict(lda)$x
+
+lda_df <- data.frame(vegetation.type, lda1)
+lda_df
+
+ggplot(lda_df) +
+  geom_point(aes(x = lda.LD1, y = lda.LD2, color = species), size = 4) +
+  theme_classic()

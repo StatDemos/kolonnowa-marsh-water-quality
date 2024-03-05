@@ -27,26 +27,6 @@ mean_data$`Vegetation type` <- relevel(as.factor(mean_data$`Vegetation type`),
 
 ## Cd
 data.Cd <- mean_data %>% filter(Parameter == "Cd")
-# model.Cd <- lm(Mean.Value~`Vegetation type`, data = data.Cd)
-# summary(model.Cd)
-# # p-value = 1.246e-11, Significant
-# 
-# # Assumption checking
-# model.Cd_fitresid <- augment(model.Cd)
-# 
-# # shapiro wilk
-# shapiro.test(model.Cd_fitresid$.std.resid) # not normal
-# # QQ plot
-# ggplot(model.Cd_fitresid, aes(sample = .std.resid)) + stat_qq() + 
-#   stat_qq_line(color = "red") +
-#   labs(title = "Normal probability plot of residuals - Cd", x = "Expected", 
-#        y = "Residuals")
-# 
-# # residual autocorrelation
-# durbinWatsonTest(model.Cd) # okay
-# 
-# # constant variance
-# bptest(model.Cd) # okay
 
 # Box Cox
 bc <- boxcox(Mean.Value~`Vegetation type`, data = data.Cd)
@@ -54,7 +34,7 @@ bc <- boxcox(Mean.Value~`Vegetation type`, data = data.Cd)
 lambda <- -1 # after rounding
 
 #fit new model using the Box-Cox transformation
-new_cd_model <- lm(((Mean.Value^lambda-1)/lambda) ~ `Vegetation type`, 
+new_cd_model <- lm((Mean.Value^-1) ~ `Vegetation type`, 
                    data = data.Cd)
 summary(new_cd_model)
 
@@ -69,6 +49,9 @@ plot1 <- ggplot(model.Cd_fitresid_new, aes(sample = .std.resid)) + stat_qq() +
   labs(title = "Cd", x = "Expected", 
        y = "Residuals")
 
+# constant variance
+bptest(new_cd_model) 
+
 
 # _______________________________________________________________________
 
@@ -77,40 +60,14 @@ plot1 <- ggplot(model.Cd_fitresid_new, aes(sample = .std.resid)) + stat_qq() +
 
 data.PO4 <- mean_data %>% filter(Parameter == "Av.PO4")
 
-# model.PO4 <- lm(Mean.Value~`Vegetation type`, data = data.PO4)
-# summary(model.PO4)
-# # p-value: 2.991e-05, significant
-# 
-# # model
-# model.PO4_fitresid <- augment(model.PO4)
-# 
-# # shapiro wilk
-# shapiro.test(model.PO4_fitresid$.std.resid)
-# # p-value = 8.293e-06, reject Ho - not normal
-# # QQ plot  ## OKAY
-# ggplot(model.PO4_fitresid, aes(sample = .std.resid)) + stat_qq() + 
-#   stat_qq_line(color = "red") +
-#   labs(title = "Normal probability plot of residuals", x = "Expected", 
-#        y = "Residuals")
-# 
-# 
-# # durbin watson
-# durbinWatsonTest(model.PO4)
-# # p-value = 0.06, do not reject Ho - data are not correlated
-# 
-# # constant variance
-# bptest(model.PO4)
-# p-value = 0.1373, do not reject Ho - variance constant
-
 # Box Cox Transformation
-library(MASS)
 bc1 <- boxcox(Mean.Value~`Vegetation type`, data = data.PO4)
 (lambda <- bc1$x[which.max(bc1$y)])
 
 lambda <- -1 # after rounding
 
 #fit new model using the Box-Cox transformation
-new_PO4_model <- lm(((Mean.Value^lambda-1)/lambda) ~ `Vegetation type`, 
+new_PO4_model <- lm((Mean.Value^-1) ~ `Vegetation type`, 
                  data = data.PO4)
 summary(new_PO4_model)
 
@@ -122,8 +79,12 @@ shapiro.test(model.po4_fitresid_new$.std.resid) # normal
 # QQ plot
 plot2 <- ggplot(model.po4_fitresid_new, aes(sample = .std.resid)) + stat_qq() + 
   stat_qq_line(color = "red") +
-  labs(title = "Normal probability plot of residuals - PO4", x = "Expected", 
+  labs(title = "PO4", x = "Expected", 
        y = "Residuals")
+
+# constant variance
+bptest(new_PO4_model) 
+
 
 
 # _______________________________________________________________________
@@ -132,4 +93,4 @@ plot2 <- ggplot(model.po4_fitresid_new, aes(sample = .std.resid)) + stat_qq() +
 
 plot1 + plot2 +
   plot_layout(ncol = 2, nrow = 1, axis_titles = 'collect') +
-  plot_annotation(title = "Normal Probability Plot of residuals")
+  plot_annotation(title = "Normal Probability Plot of Residuals")
