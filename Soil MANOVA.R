@@ -18,8 +18,12 @@ summary.aov(manova_model)
 #-------------------------------------------------------------------------------
 # Normality assumption
 # Multivariate Normality
+
 # C <- t(Soil_data[1:47, 3:6])
 # mshapiro.test(C)
+
+# library(MVN)
+# mvn(Soil_data[, 3:6], multivariatePlot = "qq", multivariateOutlierMethod = "quan")
 
 
 # Shapirowilk Test
@@ -53,6 +57,5 @@ p4 <- ggplot(Soil_data, aes(sample=Soil_data$Bulk.D)) +
 p1 + p2 + p3 + p4 +
   plot_layout(ncol = 2, nrow = 2, axis_titles = 'collect') +
   plot_annotation(title = "Normal Probability Plot")
-
 
 
