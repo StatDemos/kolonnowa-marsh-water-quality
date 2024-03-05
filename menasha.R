@@ -151,6 +151,30 @@ durbinWatsonTest(model.PO4)
 bptest(model.PO4)
 # p-value = 0.1373, do not reject Ho - variance constant
 
+# Box Cox Transformation
+library(MASS)
+bc1 <- boxcox(Mean.Value~`Vegetation type`, data = data.PO4)
+(lambda <- bc1$x[which.max(bc1$y)])
+
+lambda <- -1
+
+#fit new linear regression model using the Box-Cox transformation
+new_model1 <- lm(((Mean.Value^lambda-1)/lambda) ~ `Vegetation type`, 
+                data = data.PO4)
+summary(new_model1)
+
+# Assumption checking
+model.po4_fitresid <- augment(new_model1)
+
+# shapiro wilk
+shapiro.test(model.po4_fitresid$.std.resid) # normal
+# QQ plot
+ggplot(model.po4_fitresid, aes(sample = .std.resid)) + stat_qq() + 
+  stat_qq_line(color = "red") +
+  labs(title = "Normal probability plot of residuals - PO4", x = "Expected", 
+       y = "Residuals")
+
+
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 
