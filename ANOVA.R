@@ -27,21 +27,30 @@ summary(model.Alkalin)
 
 model.Alkalin.new <- aov(model.Alkalin)
 tukey.alkalin <- TukeyHSD(model.Alkalin.new, conf.level=.95) 
-plot(tukey.alkalin, las = 2, title = )
-
+plot(tukey.alkalin, las = 2, title =  )
 
 
 # BOD
 data.BOD <- mean_data %>% filter(Parameter == "Av.BOD")
-model.BOD <- lm(Mean.Value~`Vegetation type`, data = data.BOD)
+model.BOD <- lm(Mean.Value~Vegetation.type, data = data.BOD)
 summary(model.BOD)
 # p-value: 2.948e-05, significant
 
+model.BOD.new <- aov(model.BOD)
+tukey.BOD <- TukeyHSD(model.BOD.new, conf.level=.95) 
+plot(tukey.BOD, las = 2 )
+
+
 # COD
 data.COD <- mean_data %>% filter(Parameter == "Av.COD")
-model.COD <- lm(Mean.Value~`Vegetation type`, data = data.COD)
+model.COD <- lm(Mean.Value~Vegetation.type, data = data.COD)
 summary(model.COD)
 # p-value: 0.0001126, significant
+
+model.COD.new <- aov(model.COD)
+tukey.COD <- TukeyHSD(model.COD.new, conf.level=.95) 
+plot(tukey.COD, las = 2 )
+
 
 # DO
 data.DO <- mean_data %>% filter(Parameter == "Av.DO")
@@ -57,21 +66,36 @@ summary(model.EC)
 
 # NH4
 data.NH4 <- mean_data %>% filter(Parameter == "Av.NH4")
-model.NH4 <- lm(Mean.Value~`Vegetation type`, data = data.NH4)
+model.NH4 <- lm(Mean.Value~Vegetation.type, data = data.NH4)
 summary(model.NH4)
 # p-value: 0.000164, significant
 
+model.NH4.new <- aov(model.NH4)
+tukey.NH4 <- TukeyHSD(model.NH4.new, conf.level=.95) 
+plot(tukey.NH4, las = 2 )
+
+
 # NO3
 data.NO3 <- mean_data %>% filter(Parameter == "Av.NO3")
-model.NO3 <- lm(Mean.Value~`Vegetation type`, data = data.NO3)
+model.NO3 <- lm(Mean.Value~Vegetation.type, data = data.NO3)
 summary(model.NO3)
 # p-value: 0.00129, significant
 
+model.NO3.new <- aov(model.NO3)
+tukey.NO3 <- TukeyHSD(model.NO3.new, conf.level=.95) 
+plot(tukey.NO3, las = 2 )
+
+
 # PO4
 data.PO4 <- mean_data %>% filter(Parameter == "Av.PO4")
-model.PO4 <- lm(Mean.Value~`Vegetation type`, data = data.PO4)
+model.PO4 <- lm(Mean.Value~Vegetation.type, data = data.PO4)
 summary(model.PO4)
 # p-value: 2.991e-05, significant
+
+model.PO4.new <- aov(model.PO4)
+tukey.PO4 <- TukeyHSD(model.PO4.new, conf.level=.95) 
+plot(tukey.PO4, las = 2 )
+
 
 # TDS
 data.TDS <- mean_data %>% filter(Parameter == "Av.TDS")
@@ -81,9 +105,14 @@ summary(model.TDS)
 
 # TSS
 data.TSS <- mean_data %>% filter(Parameter == "Av.TSS")
-model.TSS <- lm(Mean.Value~`Vegetation type`, data = data.TSS)
+model.TSS <- lm(Mean.Value~Vegetation.type, data = data.TSS)
 summary(model.TSS)
 # p-value = 0.008069, Significant
+
+model.TSS.new <- aov(model.TSS)
+tukey.TSS <- TukeyHSD(model.TSS.new, conf.level=.95) 
+plot(tukey.TSS, las = 2 )
+
 
 # Temp
 data.Temp <- mean_data %>% filter(Parameter == "Av.Temp")
@@ -93,27 +122,44 @@ summary(model.Temp)
 
 # Ph
 data.Ph <- mean_data %>% filter(Parameter == "Av.pH")
-model.Ph <- lm(Mean.Value~`Vegetation type`, data = data.Ph)
+model.Ph <- lm(Mean.Value~Vegetation.type, data = data.Ph)
 summary(model.Ph)
 # p-value = 7.17e-06, Significant
 
+model.Ph.new <- aov(model.Ph)
+tukey.Ph <- TukeyHSD(model.Ph.new, conf.level=.95) 
+plot(tukey.Ph, las = 2)
+
+
 # Cd
 data.Cd <- mean_data %>% filter(Parameter == "Cd")
-model.Cd <- lm(Mean.Value~`Vegetation type`, data = data.Cd)
+model.Cd <- lm(Mean.Value~Vegetation.type, data = data.Cd)
 summary(model.Cd)
 # p-value = 1.246e-11, Significant
 
+model.Cd.new <- aov(model.Cd)
+tukey.Cd <- TukeyHSD(model.Cd.new, conf.level=.95) 
+plot(tukey.Cd, las = 2)
+
 # Cr
 data.Cr <- mean_data %>% filter(Parameter == "Cr")
-model.Cr <- lm(Mean.Value~`Vegetation type`, data = data.Cr)
+model.Cr <- lm(Mean.Value~Vegetation.type, data = data.Cr)
 summary(model.Cr)
 # p-value: < 2.2e-16, Significant
 
+model.Cr.new <- aov(model.Cr)
+tukey.Cr <- TukeyHSD(model.Cr.new, conf.level=.95) 
+plot(tukey.Cr, las = 2)
+
 # Pb        
 data.Pb <- mean_data %>% filter(Parameter == "Pb")
-model.Pb <- lm(Mean.Value~`Vegetation type`, data = data.Pb)
+model.Pb <- lm(Mean.Value~Vegetation.type, data = data.Pb)
 summary(model.Pb)
 # p-value = 5.145e-08, Significant
+
+model.Pb.new <- aov(model.Pb)
+tukey.Pb <- TukeyHSD(model.Pb.new, conf.level=.95) 
+plot(tukey.Pb, las = 2)
 
 ################################################################################
 # Nonparametric test - kruskal wallis, non normal error
