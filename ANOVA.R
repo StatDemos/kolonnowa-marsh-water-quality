@@ -14,14 +14,22 @@ mean_data <- water_quality_data %>% pivot_longer(col = 4:18,
 
 mean_data$`Vegetation type` <- relevel(as.factor(mean_data$`Vegetation type`), 
                                        ref = "WWI")
+
+mean_data <- mean_data %>% rename(Vegetation.type = "Vegetation type")
   
 # ANOVA
 
 # Alkalin
 data.Alkalin <- mean_data %>% filter(Parameter == "Av.Alkalin")
-model.Alkalin <- lm(Mean.Value~`Vegetation type`, data = data.Alkalin)
+model.Alkalin <- lm(Mean.Value~Vegetation.type, data = data.Alkalin)
 summary(model.Alkalin)
 # p-value: 0.004985, significant
+
+model.Alkalin.new <- aov(model.Alkalin)
+tukey.alkalin <- TukeyHSD(model.Alkalin.new, conf.level=.95) 
+plot(tukey.alkalin, las = 2, title = )
+
+
 
 # BOD
 data.BOD <- mean_data %>% filter(Parameter == "Av.BOD")
@@ -149,7 +157,7 @@ manova_data <- mean_data %>% pivot_wider(names_from = Parameter,
                                          values_from = Mean.Value)
 
 
-#fit the MANOVA model - parameric
+#fit the MANOVA model - parametric
 manova_model_para <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NH4, Av.NO3, 
                                   Av.PO4, Av.TSS,
                       Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, 
@@ -159,7 +167,7 @@ summary(manova_model_para)
 summary.aov(manova_model_para)
 
 
-#fit the MANOVA model - nonparameric
+#fit the MANOVA model - nonparametric
 manova_model_nonpara <- manova(cbind(Av.Alkalin, Av.BOD, Av.NH4, Av.PO4, 
                                   Av.pH, Cd, Cr, Pb) ~ `Vegetation type`, 
                                data = manova_data)
@@ -184,7 +192,7 @@ manova_data$Av.pH[17] <- mean(manova_data$Av.pH)
 C <- t(manova_data[1:47, 3:17])
 mshapiro.test(C)
 
-#fit the MANOVA model - parameric with normal variables
+#fit the MANOVA model - parametric with normal variables
 manova_model_para <- manova(cbind(Av.Alkalin, Av.BOD, Av.COD, Av.NO3, 
                                   Av.pH, Cr, Pb) ~ `Vegetation type`, 
                             data = manova_data)
