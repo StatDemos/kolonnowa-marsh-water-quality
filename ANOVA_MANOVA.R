@@ -11,7 +11,8 @@ water_quality_data <- read_excel("water quality monthly variation.xlsx")
 # Creating new df
 mean_data <- water_quality_data %>% pivot_longer(col = 4:18, names_to = "Parameter", 
                                           values_to = "Value") %>%
-      group_by(Location, Parameter, `Vegetation type`) %>% summarise(Mean.Value = mean(Value))
+      group_by(Location, Parameter, `Vegetation type`) %>% summarise(Mean.Value = 
+                                                                       mean(Value, na.rm = TRUE))
 
 mean_data$`Vegetation type` <- relevel(as.factor(mean_data$`Vegetation type`), ref = "WWI")
   
@@ -87,7 +88,7 @@ summary(model.Temp)
 data.Ph <- mean_data %>% filter(Parameter == "Av.pH")
 model.Ph <- lm(Mean.Value~`Vegetation type`, data = data.Ph)
 summary(model.Ph)
-# p-value = 7.17e-06, Significant
+# p-value = 4.659e-06, Significant
 
 # Cd
 data.Cd <- mean_data %>% filter(Parameter == "Cd")
@@ -110,7 +111,8 @@ summary(model.Pb)
 ########################################################################
 # MANOVA
 
-manova_data <- mean_data %>% pivot_wider(names_from = Parameter, values_from = Mean.Value)
+manova_data <- mean_data %>% pivot_wider(names_from = Parameter, 
+                                         values_from = Mean.Value)
 
 
 #fit the MANOVA model - parametric
@@ -149,5 +151,4 @@ lda_df <- data.frame(vegetation.type, lda1)
 lda_df
 
 ggplot(lda_df) +
-  geom_point(aes(x = lda.LD1, y = lda.LD2, color = species), size = 4) +
-  theme_classic()
+  geom_point(aes(x = LD1, y = LD2, color = Vegetation.type), size = 2) 
