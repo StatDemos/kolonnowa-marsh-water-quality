@@ -1,6 +1,7 @@
 # Loading libraries
 library(readxl)
 library(tidyverse)
+library(writexl)
  
 # Loading Dataset
 water_quality_data <- read_excel("water quality monthly variation.xlsx")
@@ -16,6 +17,8 @@ mean_data$`Vegetation type` <- relevel(as.factor(mean_data$`Vegetation type`),
                                        ref = "WWI")
 
 mean_data <- mean_data %>% rename(Vegetation.type = "Vegetation type")
+
+write_xlsx(mean_data, "water.quality.data.xlsx")
   
 # ANOVA
 
